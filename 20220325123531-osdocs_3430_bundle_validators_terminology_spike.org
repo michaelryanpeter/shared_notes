@@ -1,0 +1,87 @@
+#+title: osdocs-3430: bundle validators terminology spike
+
+* Definition of validate
+
+https://www.merriam-webster.com/dictionary/validator
+
+1. Ratify
+
+   A. to make legally valid : RATIFY
+
+   B. to grant official sanction to by marking
+
+      // validated her passport
+
+   C. to confirm the validity of (an election)
+
+      also : to declare (a person) elected
+
+2. Verify
+
+   A. to support or corroborate on a sound or authoritative basis
+
+      // experiments designed to validate the hypothesis
+
+   B. to recognize, establish, or illustrate the worthiness or legitimacy of
+
+      // validate his concerns
+
+ I think we mean definition 2.a, to support or corroborate. Basically, these validators can check for best practices and check for issues in specific environments. We definitely do not want to imply 1.b., to grant official sanction. To put it another way, these tests do not make an "official Red Hat validated Operator," correct?
+
+ I don't think this will create a problem. we can just introduce the validators using language such as- "Bundle validators are tests designed to validate Operators. You can create your own tests, based on the needs of your cluster and deployment. The Operator SDK provides a framework for validator plug-ins that test deployments."
+
+* Questions/concerns
+
+- We want to be careful not to make support claims as to what constitutes a `validator` approved bundle. Right now, since RH pipeline teams are the main customer this is not an issue, but a small degree of caution is perhaps in order. (unless I am misunderstanding)
+- If the `bundle validate` command will have the basic or default tests externalized, does that mean a customer would always need to run =bundle validate --validator=? Is that redundant? Could the command just require a defined field?
+- The directory name (=validations/=): Looking at the definition (https://www.merriam-webster.com/dictionary/validation), especially the synonyms, I don't think this is the right term. This might translation issues as well. Especially if we switch between "validator" and "validations". If we want to use alternative terms, I think we could decide on the use of "test," "plug-in," or something else I can't think of right now. :)
+
+* Random alternative terms
+
+- proctor?
+
+  Like a test proctor that facillates an exam and monitors it. https://www.merriam-webster.com/dictionary/proctor
+
+  But that isn't right, because really, OSDK proctors the test.
+
+  =bundle validate --proctor-test=<path_to_test>=
+
+- field test
+- validator plug-in
+- validation suite
+- validaiton plug-ins
+- test plug-in
+- test package
+- validation package
+- validation utility
+- bundle validate plug-in
+- bundle validate tests
+-
+
+* existing docs for `bundle validate` command
+
+** downstream
+- OSDK CLI reference https://docs.openshift.com/container-platform/4.10/operators/operator_sdk/osdk-cli-ref.html#osdk-cli-ref-bundle-validate_osdk-cli-ref
+
+- Working with bundle images https://docs.openshift.com/container-platform/4.8/operators/operator_sdk/osdk-working-bundle-images.html
+
+- Scorecard
+  https://docs.openshift.com/container-platform/4.8/operators/operator_sdk/osdk-scorecard.html
+
+** upstream
+
+https://sdk.operatorframework.io/docs/cli/operator-sdk_bundle_validate/#m-docsclioperator-sdk_bundle_validate
+
+* Possible related docs epics
+
+** Dynamic loading of the bundle validation suite
+- https://issues.redhat.com/browse/OSDK-1894
+- https://issues.redhat.com/browse/OSDOCS-2860
+
+** OSDK-1576: Decouple the scaffolded test dependencies/resources from the bundle image
+- https://issues.redhat.com/browse/OSDOCS-2213
+- https://issues.redhat.com/browse/OSDK-1576
+
+** Document the bundle validate command that checks for deprecated kube 1.22 APIs
+
+- https://issues.redhat.com/browse/OSDOCS-2731
